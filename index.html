@@ -38,6 +38,12 @@ button{border:0;border-radius:12px;padding:12px 17px;font-weight:900;cursor:poin
 .tip{background:#F0F7E4;border-radius:14px;padding:14px 16px;font-size:13px;line-height:1.65;color:#536047;margin-top:18px}
 footer{text-align:center;color:#92998C;font-size:12px;padding:0 15px 30px}
 @media(max-width:680px){.grid{grid-template-columns:1fr}.full{grid-column:auto}.card{padding:18px}header{padding-top:30px}}
+
+.direct-ai-box{margin-top:22px;padding:18px;border:1px solid #d9e4c8;border-left:5px solid #78A83A;border-radius:14px;background:#fffdf8}
+.direct-ai-box h3{margin:0 0 8px;font-size:18px}
+.direct-ai-box p{font-size:13px;color:#666;line-height:1.6;margin:6px 0 12px}
+.direct-ai-result{white-space:pre-wrap;background:#f8f8f4;border:1px solid #e2e2da;border-radius:11px;padding:14px;line-height:1.7;min-height:110px}
+.direct-ai-actions{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
 </style>
 </head>
 <body>
@@ -60,24 +66,24 @@ footer{text-align:center;color:#92998C;font-size:12px;padding:0 15px 30px}
     <div><label>화면 범위</label>
       <select id="shot"><option>전신</option><option>반신</option><option>45도</option><option>얼굴 중심</option></select>
     </div>
-    <div class="full"><label>외형 특징</label><textarea id="look" placeholder="예: 둥근 얼굴, 회백색 올림머리, 둥근 안경, 작은 눈, 따뜻한 미소"></textarea></div>
-    <div class="full"><label>의상 · 소품</label><textarea id="clothes" placeholder="예: 자주색 한복 저고리, 아이보리색 앞치마, 두건, 요리하는 그릇과 국자"></textarea></div>
+    <div class="full"><label>외형 특징</label><textarea id="look" placeholder="예: 둥근 얼굴, 회백색 올림머리, 작은 둥근 안경, 따뜻한 미소"></textarea></div>
+    <div class="full"><label>의상 · 소품</label><textarea id="clothes" placeholder="예: 자주색 한복, 아이보리 앞치마, 자주색 두건(잔 꽃무늬)"></textarea></div>
   </div>
 </section>
 
 <section class="card">
   <div class="step">STEP 02</div><h2>성격과 분위기 설정</h2>
   <div class="grid">
-    <div><label>성격</label><input id="personality" placeholder="예: 따뜻하고 다정하며 정이 많고, 문제를 먼저 살피고 도와주는 성격"></div>
-    <div><label>주요 표정 · 감정</label><input id="emotion" placeholder="예: 따뜻한 미소, 웃는 눈, 다정하고 편안한 표정"></div>
-    <div class="full"><label>자주 하는 행동 <span style="font-weight:400;color:#8A9184">(선택)</span></label><input id="action" placeholder="예: 맛있는 음식을 만들고, 이웃을 살피고, 이야기를 들어준다"></div>
+    <div><label>성격</label><input id="personality" placeholder="예: 따뜻하고 다정함"></div>
+    <div><label>주요 표정 · 감정</label><input id="emotion" placeholder="예: 따뜻한 미소"></div>
+    <div class="full"><label>자주 하는 행동 <span style="font-weight:400;color:#8A9184">(선택)</span></label><input id="action" placeholder="예: 큰 솥에 팥죽 끓이기, 이야기 들어주기"></div>
     <div><label>전체 분위기</label><input id="mood" value="따뜻하고 사랑스러운 그림책 분위기"></div>
     <div><label>화풍</label>
       <select id="style" onchange="toggleOther('style','styleOther')"><option>한국 그림책 일러스트, 부드러운 손그림</option><option>따뜻한 디지털 그림책 일러스트</option><option>깔끔한 플랫 벡터 일러스트</option><option>색연필 느낌의 그림책 일러스트</option><option>3D 애니메이션 캐릭터 스타일</option><option>기타</option></select>
       <input id="styleOther" style="display:none;margin-top:8px" placeholder="원하는 화풍을 직접 입력하세요">
       <input id="styleExtra" style="margin-top:8px" placeholder="추가 스타일 (선택)  예: 색연필 질감, 따뜻한 파스텔 색감">
     </div>
-    <div><label>배경</label><select id="bg"><option>심플한 밝은 배경</option><option>흰색 배경</option><option>배경 없음, 캐릭터 중심</option></select></div>
+    <div><label>배경</label><select id="bg"><option>흰색 배경</option><option>심플한 밝은 배경</option><option>배경 없음, 캐릭터 중심</option></select></div>
     <div><label>글자</label><select id="text"><option>이미지 안에 글자 없음</option><option>상관없음</option></select></div>
   </div>
   <div class="actions">
@@ -102,6 +108,26 @@ footer{text-align:center;color:#92998C;font-size:12px;padding:0 15px 30px}
 
   <div class="tip"><b>🍀 사용 TIP</b><br>③ 프롬프트를 복사해 원하는 AI 이미지 생성 도구에 붙여넣어 캐릭터를 만들어보세요. 여러 장면을 만들 때는 ② 캐릭터 고정 정보를 기준으로 같은 특징을 유지합니다.</div>
 </section>
+
+<section class="card">
+  <div class="step">STEP 04 · 비교 실습</div>
+  <h2>AI 명령어 + 한 줄 캐릭터로 만들어보기</h2>
+  <p style="font-size:14px;color:#666;line-height:1.7">
+    자동 생성된 상세 프롬프트와 비교해보세요.<br>
+    위에서 만든 한 줄 캐릭터를 자동으로 불러오거나, <b>입력창에 직접 입력·붙여넣기</b> 할 수 있습니다.
+  </p>
+  <div class="direct-ai-box">
+    <h3>AI 명령어</h3>
+    <textarea class="direct-ai-result" id="directAiResult" style="width:100%;min-height:180px;resize:vertical;font:inherit"
+placeholder="여기에 한 줄 캐릭터를 직접 입력하거나 붙여넣을 수 있습니다."></textarea>
+    <div class="direct-ai-actions">
+      <button class="primary" type="button" onclick="buildDirectAi()">위 한 줄 캐릭터 불러오기</button>
+      <button class="copy" type="button" onclick="copyDirectAi()">명령어 + 한 줄 캐릭터 복사</button>
+    </div>
+  </div>
+  <div class="tip"><b>🍀 비교해보기</b> ① 자동 프롬프트로 만든 캐릭터와 ② AI 명령어 + 한 줄 캐릭터로 만든 캐릭터의 차이를 확인해보세요.</div>
+</section>
+
 </main>
 <footer>네잎클래스 · AI 그림책 캐릭터 프롬프트 MAKER v1.0</footer>
 
@@ -132,25 +158,25 @@ function makePrompt(){
 }
 function exampleBokja(){
   $("name").value="복자 할머니"; $("age").value="70대"; $("type").value="기타";
-  $("typeOther").style.display="block"; $("typeOther").value="동네에 사는 한국인 할머니";
-  $("look").value="둥근 얼굴, 회백색 올림머리, 둥근 안경, 작은 눈, 따뜻한 미소";
-  $("clothes").value="자주색 한복 저고리, 아이보리색 앞치마, 두건, 요리하는 그릇과 국자";
-  $("personality").value="따뜻하고 다정하며 정이 많고, 문제를 먼저 살피고 도와주는 성격";
-  $("emotion").value="따뜻한 미소, 웃는 눈, 다정하고 편안한 표정";
-  $("action").value="맛있는 음식을 만들고, 이웃을 살피고, 이야기를 들어준다";
-  $("mood").value="포근하고 친근한, 정겨운 시골 그림책 분위기";
+  $("typeOther").style.display="block"; $("typeOther").value="한국인 할머니";
+  $("look").value="둥근 얼굴, 회백색 올림머리, 작은 둥근 안경, 따뜻한 미소";
+  $("clothes").value="자주색 한복, 아이보리 앞치마, 자주색 두건(잔 꽃무늬)";
+  $("personality").value="따뜻하고 다정함";
+  $("emotion").value="따뜻한 미소";
+  $("action").value="큰 솥에 팥죽 끓이기, 이야기 들어주기";
+  $("mood").value="포근하고 정겨운 분위기";
   $("style").selectedIndex=0; $("styleOther").style.display="none"; $("styleExtra").value="따뜻한 색감";
   $("shot").value="전신"; $("bg").selectedIndex=0; $("text").selectedIndex=0; makePrompt();
 }
 function exampleTiger(){
   $("name").value="어흥이"; $("age").value="아기"; $("type").value="동물 캐릭터";
   $("typeOther").style.display="none"; $("typeOther").value="";
-  $("look").value="주황색 털, 검은 줄무늬, 둥근 얼굴, 크고 둥근 눈, 하얀 털, 통통한 체형";
+  $("look").value="주황색 털, 검은 줄무늬, 둥근 얼굴, 큰 눈";
   $("clothes").value="빨간 목도리";
-  $("personality").value="처음에는 무서워 보이지만 실제로는 배고프고 외로우며 마음이 따뜻한 성격";
-  $("emotion").value="배고픔, 외로움, 불안함, 점차 마음이 열리는 표정";
-  $("action").value="숲을 헤매고, 주변을 두리번거리며 도움을 찾는다";
-  $("mood").value="따뜻하지만 조금 안쓰럽고, 보호해주고 싶은 그림책 분위기";
+  $("personality").value="마음이 따뜻함";
+  $("emotion").value="배고프고 외로운 표정";
+  $("action").value="숲을 헤매며 주변을 살펴보기";
+  $("mood").value="따뜻하고 사랑스러운 분위기";
   $("style").selectedIndex=0; $("styleOther").style.display="none"; $("styleExtra").value="따뜻한 색감";
   $("shot").value="전신"; $("bg").selectedIndex=0; $("text").selectedIndex=0; makePrompt();
 }
@@ -169,4 +195,43 @@ async function copyText(id){
   catch(e){const ta=document.createElement("textarea");ta.value=t;document.body.appendChild(ta);ta.select();document.execCommand("copy");ta.remove();alert("복사되었습니다.");}
 }
 </script>
+
+<script>
+function getOneLineCharacter(){
+  const candidates=["oneLine","oneLineResult","lineResult","summary","summaryResult"];
+  for(const id of candidates){
+    const el=document.getElementById(id);
+    if(el && el.textContent && !/입력|눌러|표시/.test(el.textContent)) return el.textContent.trim();
+  }
+  const name=document.getElementById("name")?.value?.trim() || "";
+  const look=document.getElementById("look")?.value?.trim() || "";
+  const clothes=document.getElementById("clothes")?.value?.trim() || "";
+  const personality=document.getElementById("personality")?.value?.trim() || "";
+  const emotion=document.getElementById("emotion")?.value?.trim() || "";
+  const parts=[look,clothes,personality,emotion].filter(Boolean);
+  return (name ? name+" — " : "") + parts.join(", ");
+}
+function buildDirectAi(){
+  const one=getOneLineCharacter();
+  if(!one){ alert("먼저 위에서 캐릭터 정보를 입력하거나, 아래 입력창에 한 줄 캐릭터를 직접 입력해주세요."); return; }
+  const command=`아래 캐릭터 설정을 바탕으로 그림책 캐릭터 이미지 생성용 프롬프트를 구체적으로 작성해줘.
+외형·의상·특징·표정·분위기·화풍을 포함하고, 여러 장면에서 캐릭터가 일관되게 유지될 수 있도록 작성해줘.
+
+[한 줄 캐릭터]
+${one}`;
+  document.getElementById("directAiResult").value=command;
+}
+async function copyDirectAi(){
+  const box=document.getElementById("directAiResult");
+  let text=box.value.trim();
+  if(!text){
+    buildDirectAi();
+    text=box.value.trim();
+  }
+  if(!text) return;
+  try{await navigator.clipboard.writeText(text); alert("AI 명령어와 한 줄 캐릭터가 함께 복사되었습니다.");}
+  catch(e){alert("복사 기능을 사용할 수 없습니다.");}
+}
+</script>
+
 </body></html>
