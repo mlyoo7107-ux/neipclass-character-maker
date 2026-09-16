@@ -114,15 +114,20 @@ footer{text-align:center;color:#92998C;font-size:12px;padding:0 15px 30px}
   <h2>AI 명령어 + 한 줄 캐릭터로 만들어보기</h2>
   <p style="font-size:14px;color:#666;line-height:1.7">
     자동 생성된 상세 프롬프트와 비교해보세요.<br>
-    위에서 만든 한 줄 캐릭터를 자동으로 불러오거나, <b>입력창에 직접 입력·붙여넣기</b> 할 수 있습니다.
+    AI 명령어는 기본으로 제공됩니다. 아래에 <b>한 줄 캐릭터만 입력하거나 붙여넣은 뒤</b> 함께 복사하세요.
   </p>
   <div class="direct-ai-box">
     <h3>AI 명령어</h3>
-    <textarea class="direct-ai-result" id="directAiResult" style="width:100%;min-height:180px;resize:vertical;font:inherit"
-placeholder="여기에 한 줄 캐릭터를 직접 입력하거나 붙여넣을 수 있습니다."></textarea>
+    <div class="direct-ai-result" id="fixedAiCommand">아래 캐릭터 설정을 바탕으로 그림책 캐릭터 이미지 생성용 프롬프트를 구체적으로 작성해줘.
+외형·의상·특징·표정·분위기·화풍을 포함하고, 여러 장면에서 캐릭터가 일관되게 유지될 수 있도록 작성해줘.</div>
+
+    <label style="display:block;margin:18px 0 7px;font-weight:900">한 줄 캐릭터</label>
+    <textarea id="directCharacterLine" style="width:100%;min-height:105px;resize:vertical;font:inherit"
+      placeholder="여기에 한 줄 캐릭터를 직접 입력하거나 붙여넣으세요."></textarea>
+
     <div class="direct-ai-actions">
-      <button class="primary" type="button" onclick="buildDirectAi()">위 한 줄 캐릭터 불러오기</button>
-      <button class="copy" type="button" onclick="copyDirectAi()">명령어 + 한 줄 캐릭터 복사</button>
+      <button class="secondary" type="button" onclick="loadOneLine()">위 한 줄 캐릭터 불러오기</button>
+      <button class="primary" type="button" onclick="copyDirectAi()">AI 명령어 + 한 줄 캐릭터 복사</button>
     </div>
   </div>
   <div class="tip"><b>🍀 비교해보기</b> ① 자동 프롬프트로 만든 캐릭터와 ② AI 명령어 + 한 줄 캐릭터로 만든 캐릭터의 차이를 확인해보세요.</div>
@@ -211,26 +216,24 @@ function getOneLineCharacter(){
   const parts=[look,clothes,personality,emotion].filter(Boolean);
   return (name ? name+" — " : "") + parts.join(", ");
 }
-function buildDirectAi(){
+function loadOneLine(){
   const one=getOneLineCharacter();
-  if(!one){ alert("먼저 위에서 캐릭터 정보를 입력하거나, 아래 입력창에 한 줄 캐릭터를 직접 입력해주세요."); return; }
+  if(!one){ alert("먼저 위에서 캐릭터 정보를 입력해주세요."); return; }
+  document.getElementById("directCharacterLine").value=one;
+}
+async function copyDirectAi(){
   const command=`아래 캐릭터 설정을 바탕으로 그림책 캐릭터 이미지 생성용 프롬프트를 구체적으로 작성해줘.
-외형·의상·특징·표정·분위기·화풍을 포함하고, 여러 장면에서 캐릭터가 일관되게 유지될 수 있도록 작성해줘.
+외형·의상·특징·표정·분위기·화풍을 포함하고, 여러 장면에서 캐릭터가 일관되게 유지될 수 있도록 작성해줘.`;
+  const one=document.getElementById("directCharacterLine").value.trim();
+  if(!one){ alert("한 줄 캐릭터를 입력하거나 불러와주세요."); return; }
+  const text=`${command}
 
 [한 줄 캐릭터]
 ${one}`;
-  document.getElementById("directAiResult").value=command;
-}
-async function copyDirectAi(){
-  const box=document.getElementById("directAiResult");
-  let text=box.value.trim();
-  if(!text){
-    buildDirectAi();
-    text=box.value.trim();
-  }
-  if(!text) return;
-  try{await navigator.clipboard.writeText(text); alert("AI 명령어와 한 줄 캐릭터가 함께 복사되었습니다.");}
-  catch(e){alert("복사 기능을 사용할 수 없습니다.");}
+  try{
+    await navigator.clipboard.writeText(text);
+    alert("AI 명령어와 한 줄 캐릭터가 함께 복사되었습니다.");
+  }catch(e){ alert("복사 기능을 사용할 수 없습니다."); }
 }
 </script>
 
