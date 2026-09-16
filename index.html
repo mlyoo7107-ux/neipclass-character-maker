@@ -51,8 +51,8 @@ footer{text-align:center;color:#92998C;font-size:12px;padding:0 15px 30px}
 <section class="card">
   <div class="step">STEP 01</div><h2>캐릭터 기본 설정</h2>
   <div class="grid">
-    <div><label>캐릭터 이름</label><input id="name" placeholder="예: 어흥이"></div>
-    <div><label>나이 / 연령대</label><input id="age" placeholder="예: 아기, 7세, 70대"></div>
+    <div><label>캐릭터 이름</label><input id="name" placeholder="예: 복자 할머니"></div>
+    <div><label>나이 / 연령대</label><input id="age" placeholder="예: 70대"></div>
     <div><label>캐릭터 유형</label>
       <select id="type" onchange="toggleOther('type','typeOther')"><option value="">선택</option><option>한국인 여성</option><option>한국인 남성</option><option>여자아이</option><option>남자아이</option><option>동물 캐릭터</option><option>판타지 캐릭터</option><option>기타</option></select>
       <input id="typeOther" style="display:none;margin-top:8px" placeholder="캐릭터 유형을 직접 입력하세요">
@@ -60,17 +60,17 @@ footer{text-align:center;color:#92998C;font-size:12px;padding:0 15px 30px}
     <div><label>화면 범위</label>
       <select id="shot"><option>전신</option><option>반신</option><option>45도</option><option>얼굴 중심</option></select>
     </div>
-    <div class="full"><label>외형 특징</label><textarea id="look" placeholder="예: 주황색 털, 검은 줄무늬, 둥근 얼굴, 크고 동그란 눈"></textarea></div>
-    <div class="full"><label>의상 · 소품</label><textarea id="clothes" placeholder="예: 빨간 목도리"></textarea></div>
+    <div class="full"><label>외형 특징</label><textarea id="look" placeholder="예: 둥근 얼굴, 회백색 올림머리, 둥근 안경, 작은 눈, 따뜻한 미소"></textarea></div>
+    <div class="full"><label>의상 · 소품</label><textarea id="clothes" placeholder="예: 자주색 한복 저고리, 아이보리색 앞치마, 두건, 요리하는 그릇과 국자"></textarea></div>
   </div>
 </section>
 
 <section class="card">
   <div class="step">STEP 02</div><h2>성격과 분위기 설정</h2>
   <div class="grid">
-    <div><label>성격</label><input id="personality" placeholder="예: 호기심 많고 순수함"></div>
-    <div><label>주요 표정 · 감정</label><input id="emotion" placeholder="예: 귀엽고 호기심 어린 표정"></div>
-    <div class="full"><label>자주 하는 행동 <span style="font-weight:400;color:#8A9184">(선택)</span></label><input id="action" placeholder="예: 주변을 두리번거리며 냄새를 맡는다"></div>
+    <div><label>성격</label><input id="personality" placeholder="예: 따뜻하고 다정하며 정이 많고, 문제를 먼저 살피고 도와주는 성격"></div>
+    <div><label>주요 표정 · 감정</label><input id="emotion" placeholder="예: 따뜻한 미소, 웃는 눈, 다정하고 편안한 표정"></div>
+    <div class="full"><label>자주 하는 행동 <span style="font-weight:400;color:#8A9184">(선택)</span></label><input id="action" placeholder="예: 맛있는 음식을 만들고, 이웃을 살피고, 이야기를 들어준다"></div>
     <div><label>전체 분위기</label><input id="mood" value="따뜻하고 사랑스러운 그림책 분위기"></div>
     <div><label>화풍</label>
       <select id="style" onchange="toggleOther('style','styleOther')"><option>한국 그림책 일러스트, 부드러운 손그림</option><option>따뜻한 디지털 그림책 일러스트</option><option>깔끔한 플랫 벡터 일러스트</option><option>색연필 느낌의 그림책 일러스트</option><option>3D 애니메이션 캐릭터 스타일</option><option>기타</option></select>
@@ -81,7 +81,8 @@ footer{text-align:center;color:#92998C;font-size:12px;padding:0 15px 30px}
     <div><label>글자</label><select id="text"><option>이미지 안에 글자 없음</option><option>상관없음</option></select></div>
   </div>
   <div class="actions">
-    <button class="secondary" onclick="example()">예시 불러오기</button>
+    <button class="secondary" onclick="exampleBokja()">복자 할머니 예시</button>
+    <button class="secondary" onclick="exampleTiger()">어흥이 예시</button>
     <button class="primary" onclick="makePrompt()">캐릭터 프롬프트 만들기</button>
     <button class="ghost" onclick="resetForm()">처음부터</button>
   </div>
@@ -129,14 +130,29 @@ function makePrompt(){
      mood, style, styleExtra, bg, text].filter(Boolean).join(", ") + ". 여러 장면에서도 캐릭터의 얼굴, 외형, 의상과 소품의 특징이 일관되게 유지되도록 표현해줘.";
   $("results").scrollIntoView({behavior:"smooth",block:"start"});
 }
-function example(){
+function exampleBokja(){
+  $("name").value="복자 할머니"; $("age").value="70대"; $("type").value="기타";
+  $("typeOther").style.display="block"; $("typeOther").value="동네에 사는 한국인 할머니";
+  $("look").value="둥근 얼굴, 회백색 올림머리, 둥근 안경, 작은 눈, 따뜻한 미소";
+  $("clothes").value="자주색 한복 저고리, 아이보리색 앞치마, 두건, 요리하는 그릇과 국자";
+  $("personality").value="따뜻하고 다정하며 정이 많고, 문제를 먼저 살피고 도와주는 성격";
+  $("emotion").value="따뜻한 미소, 웃는 눈, 다정하고 편안한 표정";
+  $("action").value="맛있는 음식을 만들고, 이웃을 살피고, 이야기를 들어준다";
+  $("mood").value="포근하고 친근한, 정겨운 시골 그림책 분위기";
+  $("style").selectedIndex=0; $("styleOther").style.display="none"; $("styleExtra").value="따뜻한 색감";
+  $("shot").value="전신"; $("bg").selectedIndex=0; $("text").selectedIndex=0; makePrompt();
+}
+function exampleTiger(){
   $("name").value="어흥이"; $("age").value="아기"; $("type").value="동물 캐릭터";
-  $("look").value="주황색 털, 선명한 검은 줄무늬, 둥근 얼굴, 크고 동그란 눈, 크림색 입 주변과 배, 작은 둥근 귀";
-  $("clothes").value="빨간색 목도리"; $("personality").value="호기심 많고 순수하며 마음이 따뜻함";
-  $("emotion").value="귀엽고 호기심 어린 표정"; $("action").value="주변을 두리번거리며 궁금한 것을 살펴본다";
-  $("mood").value="따뜻하고 사랑스러운 그림책 분위기"; $("style").selectedIndex=0;
-  $("shot").value="전신"; $("bg").selectedIndex=0; $("text").selectedIndex=0;
-  $("typeOther").style.display="none"; $("styleOther").style.display="none"; $("styleExtra").value=""; makePrompt();
+  $("typeOther").style.display="none"; $("typeOther").value="";
+  $("look").value="주황색 털, 검은 줄무늬, 둥근 얼굴, 크고 둥근 눈, 하얀 털, 통통한 체형";
+  $("clothes").value="빨간 목도리";
+  $("personality").value="처음에는 무서워 보이지만 실제로는 배고프고 외로우며 마음이 따뜻한 성격";
+  $("emotion").value="배고픔, 외로움, 불안함, 점차 마음이 열리는 표정";
+  $("action").value="숲을 헤매고, 주변을 두리번거리며 도움을 찾는다";
+  $("mood").value="따뜻하지만 조금 안쓰럽고, 보호해주고 싶은 그림책 분위기";
+  $("style").selectedIndex=0; $("styleOther").style.display="none"; $("styleExtra").value="따뜻한 색감";
+  $("shot").value="전신"; $("bg").selectedIndex=0; $("text").selectedIndex=0; makePrompt();
 }
 function resetForm(){
   document.querySelectorAll("input,textarea").forEach(e=>e.value="");
