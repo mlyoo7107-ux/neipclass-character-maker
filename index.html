@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>네잎클래스 캐릭터 프롬프트 MAKER</title>
+<style>
+:root{
+  --green:#78A83A; --deep:#4E7428; --lime:#DCEFAF; --cream:#FFFDF5;
+  --line:#DCE5CE; --text:#293125; --muted:#6D7667; --white:#fff;
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:Pretendard,"Noto Sans KR",Arial,sans-serif;background:var(--cream);color:var(--text)}
+header{padding:42px 20px 28px;text-align:center;background:linear-gradient(180deg,#EFF8D8 0%,#FFFDF5 100%)}
+.brand{font-size:15px;font-weight:800;color:var(--deep);letter-spacing:.04em}
+h1{margin:9px 0 8px;font-size:clamp(27px,5vw,42px);line-height:1.2}
+.sub{color:var(--muted);font-size:15px}
+.wrap{max-width:980px;margin:0 auto;padding:18px 18px 60px}
+.card{background:#fff;border:1px solid var(--line);border-radius:22px;padding:24px;margin:16px 0;box-shadow:0 8px 24px rgba(70,90,45,.06)}
+.step{font-size:13px;font-weight:900;color:var(--deep);margin-bottom:5px}
+h2{font-size:21px;margin:0 0 18px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:15px}
+.full{grid-column:1/-1}
+label{display:block;font-size:13px;font-weight:800;margin:0 0 7px}
+input,select,textarea{width:100%;border:1px solid #D8DED0;border-radius:12px;padding:12px 13px;background:#FFFEFA;font:inherit;color:var(--text);outline:none}
+textarea{min-height:82px;resize:vertical}
+input:focus,select:focus,textarea:focus{border-color:var(--green);box-shadow:0 0 0 3px rgba(120,168,58,.12)}
+.hint{font-size:12px;color:#8A9184;margin-top:5px}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+button{border:0;border-radius:12px;padding:12px 17px;font-weight:900;cursor:pointer;font-size:14px}
+.primary{background:var(--green);color:white}
+.secondary{background:#EEF5DF;color:var(--deep)}
+.ghost{background:#F5F5F1;color:#646B60}
+.result{background:#F8FBEF;border:1px solid #DCE9C6;border-radius:14px;padding:16px;white-space:pre-wrap;line-height:1.75;min-height:70px}
+.result-title{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:20px 0 8px}
+.result-title strong{font-size:15px}
+.copy{padding:8px 11px;background:#fff;border:1px solid #D8E5C1;color:var(--deep);font-size:12px}
+.tip{background:#F0F7E4;border-radius:14px;padding:14px 16px;font-size:13px;line-height:1.65;color:#536047;margin-top:18px}
+footer{text-align:center;color:#92998C;font-size:12px;padding:0 15px 30px}
+@media(max-width:680px){.grid{grid-template-columns:1fr}.full{grid-column:auto}.card{padding:18px}header{padding-top:30px}}
+</style>
+</head>
+<body>
+<header>
+  <div class="brand">🍀 네잎클래스 AI 그림책</div>
+  <h1>캐릭터 프롬프트 MAKER</h1>
+  <div class="sub">캐릭터를 설계하고, AI 이미지 생성에 사용할 프롬프트를 만들어보세요.</div>
+</header>
+
+<main class="wrap">
+<section class="card">
+  <div class="step">STEP 01</div><h2>캐릭터 기본 설정</h2>
+  <div class="grid">
+    <div><label>캐릭터 이름</label><input id="name" placeholder="예: 어흥이"></div>
+    <div><label>나이 / 연령대</label><input id="age" placeholder="예: 아기, 7세, 70대"></div>
+    <div><label>캐릭터 유형</label>
+      <select id="type" onchange="toggleOther('type','typeOther')"><option value="">선택</option><option>한국인 여성</option><option>한국인 남성</option><option>여자아이</option><option>남자아이</option><option>동물 캐릭터</option><option>판타지 캐릭터</option><option>기타</option></select>
+      <input id="typeOther" style="display:none;margin-top:8px" placeholder="캐릭터 유형을 직접 입력하세요">
+    </div>
+    <div><label>화면 범위</label>
+      <select id="shot"><option>전신</option><option>반신</option><option>45도</option><option>얼굴 중심</option></select>
+    </div>
+    <div class="full"><label>외형 특징</label><textarea id="look" placeholder="예: 주황색 털, 검은 줄무늬, 둥근 얼굴, 크고 동그란 눈"></textarea></div>
+    <div class="full"><label>의상 · 소품</label><textarea id="clothes" placeholder="예: 빨간 목도리"></textarea></div>
+  </div>
+</section>
+
+<section class="card">
+  <div class="step">STEP 02</div><h2>성격과 분위기 설정</h2>
+  <div class="grid">
+    <div><label>성격</label><input id="personality" placeholder="예: 호기심 많고 순수함"></div>
+    <div><label>주요 표정 · 감정</label><input id="emotion" placeholder="예: 귀엽고 호기심 어린 표정"></div>
+    <div class="full"><label>자주 하는 행동 <span style="font-weight:400;color:#8A9184">(선택)</span></label><input id="action" placeholder="예: 주변을 두리번거리며 냄새를 맡는다"></div>
+    <div><label>전체 분위기</label><input id="mood" value="따뜻하고 사랑스러운 그림책 분위기"></div>
+    <div><label>화풍</label>
+      <select id="style" onchange="toggleOther('style','styleOther')"><option>한국 그림책 일러스트, 부드러운 손그림</option><option>따뜻한 디지털 그림책 일러스트</option><option>깔끔한 플랫 벡터 일러스트</option><option>색연필 느낌의 그림책 일러스트</option><option>3D 애니메이션 캐릭터 스타일</option><option>기타</option></select>
+      <input id="styleOther" style="display:none;margin-top:8px" placeholder="원하는 화풍을 직접 입력하세요">
+    </div>
+    <div><label>배경</label><select id="bg"><option>심플한 밝은 배경</option><option>흰색 배경</option><option>배경 없음, 캐릭터 중심</option></select></div>
+    <div><label>글자</label><select id="text"><option>이미지 안에 글자 없음</option><option>상관없음</option></select></div>
+  </div>
+  <div class="actions">
+    <button class="secondary" onclick="example()">예시 불러오기</button>
+    <button class="primary" onclick="makePrompt()">캐릭터 프롬프트 만들기</button>
+    <button class="ghost" onclick="resetForm()">처음부터</button>
+  </div>
+</section>
+
+<section class="card" id="results">
+  <div class="step">STEP 03</div><h2>완성된 캐릭터 프롬프트</h2>
+
+  <div class="result-title"><strong>① 나의 한 줄 캐릭터</strong><button class="copy" onclick="copyText('one')">복사하기</button></div>
+  <div class="result" id="one">정보를 입력한 뒤 ‘캐릭터 프롬프트 만들기’를 눌러주세요.</div>
+
+  <div class="result-title"><strong>② 🔒 캐릭터 고정 정보</strong><button class="copy" onclick="copyText('fixed')">복사하기</button></div>
+  <div class="result" id="fixed">장면이 달라져도 유지할 캐릭터의 핵심 특징이 표시됩니다.</div>
+
+  <div class="result-title"><strong>③ AI 이미지 생성용 캐릭터 프롬프트</strong><button class="copy" onclick="copyText('prompt')">프롬프트 복사</button></div>
+  <div class="result" id="prompt">완성된 프롬프트가 여기에 표시됩니다.</div>
+
+  <div class="tip"><b>🍀 사용 TIP</b><br>③ 프롬프트를 복사해 원하는 AI 이미지 생성 도구에 붙여넣어 캐릭터를 만들어보세요. 여러 장면을 만들 때는 ② 캐릭터 고정 정보를 기준으로 같은 특징을 유지합니다.</div>
+</section>
+</main>
+<footer>네잎클래스 · AI 그림책 캐릭터 프롬프트 MAKER v1.0</footer>
+
+<script>
+const $=id=>document.getElementById(id);
+const val=id=>$(id).value.trim();
+function clean(arr){return arr.filter(Boolean).join(" · ")}
+function toggleOther(selectId,inputId){
+  const show=$(selectId).value==="기타";
+  $(inputId).style.display=show?"block":"none";
+  if(show) $(inputId).focus();
+}
+function customVal(selectId,inputId){
+  return $(selectId).value==="기타" ? val(inputId) : val(selectId);
+}
+function makePrompt(){
+  const n=val("name"), age=val("age"), type=customVal("type","typeOther"), look=val("look"), clothes=val("clothes"),
+        personality=val("personality"), emotion=val("emotion"), action=val("action"), mood=val("mood"),
+        style=customVal("style","styleOther"), shot=val("shot"), bg=val("bg"), text=val("text");
+  if(!n && !look){alert("캐릭터 이름이나 외형 특징을 입력해주세요."); return;}
+  $("one").textContent = clean([n, age, type, look, clothes, personality ? personality+" 성격" : "", emotion]);
+  $("fixed").textContent = clean([look, clothes, emotion]);
+  const intro = clean([age, type, n ? n+"라는 캐릭터" : "그림책 캐릭터"]);
+  $("prompt").textContent =
+    [intro, look, clothes, emotion, personality ? personality+" 성격" : "", action, shot+" 구도",
+     mood, style, bg, text].filter(Boolean).join(", ") + ". 여러 장면에서도 캐릭터의 얼굴, 외형, 의상과 소품의 특징이 일관되게 유지되도록 표현해줘.";
+  $("results").scrollIntoView({behavior:"smooth",block:"start"});
+}
+function example(){
+  $("name").value="어흥이"; $("age").value="아기"; $("type").value="동물 캐릭터";
+  $("look").value="주황색 털, 선명한 검은 줄무늬, 둥근 얼굴, 크고 동그란 눈, 크림색 입 주변과 배, 작은 둥근 귀";
+  $("clothes").value="빨간색 목도리"; $("personality").value="호기심 많고 순수하며 마음이 따뜻함";
+  $("emotion").value="귀엽고 호기심 어린 표정"; $("action").value="주변을 두리번거리며 궁금한 것을 살펴본다";
+  $("mood").value="따뜻하고 사랑스러운 그림책 분위기"; $("style").selectedIndex=0;
+  $("shot").value="전신"; $("bg").selectedIndex=0; $("text").selectedIndex=0;
+  $("typeOther").style.display="none"; $("styleOther").style.display="none"; makePrompt();
+}
+function resetForm(){
+  document.querySelectorAll("input,textarea").forEach(e=>e.value="");
+  document.querySelectorAll("select").forEach(e=>e.selectedIndex=0);
+  ["typeOther","styleOther"].forEach(id=>{$(id).value="";$(id).style.display="none";});
+  $("mood").value="따뜻하고 사랑스러운 그림책 분위기";
+  $("one").textContent="정보를 입력한 뒤 ‘캐릭터 프롬프트 만들기’를 눌러주세요.";
+  $("fixed").textContent="장면이 달라져도 유지할 캐릭터의 핵심 특징이 표시됩니다.";
+  $("prompt").textContent="완성된 프롬프트가 여기에 표시됩니다.";
+}
+async function copyText(id){
+  const t=$(id).textContent;
+  try{await navigator.clipboard.writeText(t); alert("복사되었습니다.");}
+  catch(e){const ta=document.createElement("textarea");ta.value=t;document.body.appendChild(ta);ta.select();document.execCommand("copy");ta.remove();alert("복사되었습니다.");}
+}
+</script>
+</body></html>
